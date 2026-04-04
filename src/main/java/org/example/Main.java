@@ -36,6 +36,19 @@ public class Main {
         System.out.println(leapYear(104));
         System.out.println();
 
+        LessonOne method10 = new LessonOne();
+        method10.changeArray();
 
+        LessonOne method11 = new LessonOne();
+        method11.emptyArray();
+
+        LessonOne method12 = new LessonOne();
+        method12.multiplySmallNumbers();
+
+        LessonOne method13 = new LessonOne();
+        method13.squareArray();
+
+        LessonOne method14 = new LessonOne();
+        method14.createArray(3, 5);
     }
 }
