@@ -21,11 +21,11 @@ public class LessonOne {
 
     // Метод 3
     public void printColor(){
-        int a = 111;
-        if (a <= 0){
+        int value = 111;
+        if (value <= 0){
             System.out.println("Красный");
         }
-        else if ((a > 0) && (a <= 100)) {
+        else if ((value > 0) && (value <= 100)) {
             System.out.println("Желтый");
         }
         else {
