@@ -45,6 +45,11 @@ public class Main {
             System.out.println(cats[i].getName() + (cats[i].isSatiety() ? " сыт(а)" : " голоден(на)"));
         }
 
+        System.out.println("Всего животных создано: " + Animal.getAnimalCount());
+        System.out.println("Всего котов создано: " + Animal.getCatCount());
+        System.out.println("Всего собак создано: " + Animal.getDogCount());
+
+        // ________________________________________
         System.out.println();
         System.out.println("_____Задание 2_____");
 
