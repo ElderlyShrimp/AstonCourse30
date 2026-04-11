@@ -62,5 +62,6 @@ public class Main {
             System.out.println("Режим работы: " + att.getOperatingMode());
             System.out.println();
         }
+
     }
 }
