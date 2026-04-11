@@ -1,6 +1,6 @@
-package org.example;
+package org.example.animals;
 
-public class Cat extends Animal{
+public class Cat extends Animal {
     private boolean satiety;
     public Cat(String name){
         super(name);

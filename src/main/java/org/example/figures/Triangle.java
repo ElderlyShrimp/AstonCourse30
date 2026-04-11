@@ -1,36 +1,39 @@
-package org.example;
+package org.example.figures;
 
-public class Rectangle implements Figure{
+public class Triangle implements Figure {
     private String colorArea;
     private String colorPerimeter;
-    private double width;
-    private double height;
+    private double sideA;
+    private double sideB;
+    private double sideC;
 
-    public Rectangle(String colorArea, String colorPerimeter, double width, double height) {
+    public Triangle(String colorArea, String colorPerimeter, double sideA, double sideB, double sideC) {
         this.colorArea = colorArea;
         this.colorPerimeter = colorPerimeter;
-        this.width = width;
-        this.height = height;
+        this.sideA = sideA;
+        this.sideB = sideB;
+        this.sideC = sideC;
     }
 
     @Override
     public double getSize1() {
-        return width;
+        return sideA;
     }
 
     @Override
     public double getSize2() {
-        return height;
+        return sideB;
     }
 
     @Override
     public double getSize3() {
-        return -1;
+        return sideC;
     }
 
     @Override
     public double getArea() {
-        return width * height;
+        double p = calculatePerimeter() / 2;
+        return Math.sqrt(p * (p - sideA) * (p - sideB) * (p - sideC));
     }
 
     @Override

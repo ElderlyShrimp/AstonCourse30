@@ -1,6 +1,6 @@
-package org.example;
+package org.example.figures;
 
-public class Circle implements Figure{
+public class Circle implements Figure {
     private String colorArea;
     private String colorPerimeter;
     private double radius;

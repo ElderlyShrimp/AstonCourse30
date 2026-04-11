@@ -1,4 +1,4 @@
-package org.example;
+package org.example.figures;
 
 public interface Figure {
     double getSize1();

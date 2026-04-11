@@ -1,5 +1,13 @@
 package org.example;
 
+import org.example.animals.Animal;
+import org.example.animals.Bowl;
+import org.example.animals.Cat;
+import org.example.animals.Dog;
+import org.example.figures.Circle;
+import org.example.figures.Rectangle;
+import org.example.figures.Triangle;
+
 public class Main {
     public static void main(String[] args) {
         Cat cat1 = new Cat("Миса");
@@ -31,7 +39,7 @@ public class Main {
         };
 
         int[] foodAmount = {10, 5, 4, 15, 3};
-
+        System.out.println();
         for (int i = 0; i < cats.length; i++){
             cats[i].eating(bowl, foodAmount[i]);
             System.out.println(cats[i].getName() + (cats[i].isSatiety() ? " сыт(а)" : " голоден(на)"));
