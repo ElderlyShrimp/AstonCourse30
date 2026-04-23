@@ -1,26 +1,29 @@
 package org.example;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PhoneBook {
-    Map<String, List<String>> book = new HashMap<>();
+    private Map<String, List<String>> phonebook;
 
-    public void add(String lastName, String phoneNumber) {
-        if (book.containsKey(lastName)) {
-            List<String> phones = book.get(lastName);
-            phones.add(phoneNumber);
+    public PhoneBook() {
+        this.phonebook = new HashMap<>();
+    }
+
+    public void add(String surname, String number){
+        if (phonebook.containsKey(surname)) {
+            List<String> numbers = phonebook.get(surname);
+            numbers.add(number);
         } else {
-            List<String> phones = new ArrayList<>();
-            phones.add(phoneNumber);
-            book.put(lastName, phones);
+            List<String> numbers = new ArrayList<>();
+            numbers.add(number);
+            phonebook.put(surname, numbers);
         }
     }
 
-    public List<String> get(String lastName) {
-        if (book.containsKey(lastName)) {
-            return book.get(lastName);
-        } else {
-            return new ArrayList<>();
-        }
+    public List<String> get(String surname) {
+        return phonebook.get(surname);
     }
 }
