@@ -7,10 +7,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
+import org.example.PaymentBlockPage;
 
 import java.time.Duration;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,6 +17,7 @@ public class MtsTest {
 
     private static WebDriver driver;
     private static WebDriverWait wait;
+    private PaymentBlockPage paymentBlock;
 
     @BeforeAll
     public static void setupDriver(){
@@ -34,7 +34,8 @@ public class MtsTest {
     @BeforeEach
     public void openSite(){
         driver.get("https://www.mts.by/");
-        acceptCookies();
+        paymentBlock = new PaymentBlockPage(driver);
+        paymentBlock.acceptCookies();
     }
 
     @AfterEach
@@ -44,67 +45,40 @@ public class MtsTest {
         }
     }
 
-    private void acceptCookies(){
-        try {
-            By cookieButton = By.xpath("//*[@id=\"cookie-agree\"]");
-            WebElement button = wait.until(ExpectedConditions.elementToBeClickable(cookieButton));
-            button.click();
-        }
-        catch (Exception ignored){}
-    }
-
     @Test
     void checkBlockTitle(){
-        WebElement title = driver.findElement(By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/h2"));
-        assertEquals("Онлайн пополнение\nбез комиссии", title.getText());
+        String actualTitle = paymentBlock.getTitle();
+        assertEquals("Онлайн пополнение\nбез комиссии", actualTitle);
     }
 
     @Test
     void checkPaymentLogo(){
-        WebElement logoContainer = driver.findElement(By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul"));
-        List<WebElement> logos = logoContainer.findElements(By.tagName("img"));
-        assertTrue(logos.size() >= 5);
-        for (WebElement logo : logos){
-            assertTrue(logo.isDisplayed());
-        }
+        int logosCount = paymentBlock.getPaymentLogosCount();
+        assertTrue(logosCount >= 5);
+        assertTrue(paymentBlock.areAllLogosDisplayed());
     }
 
     @Test
     void checkLinkDetails(){
-        WebElement link = driver.findElement(By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/a"));
+        assertTrue(paymentBlock.detailsLinkDisplayed());
+        assertTrue(paymentBlock.detailsLinkEnabled());
 
-        assertTrue(link.isDisplayed());
-        assertTrue(link.isEnabled());
-        link.click();
+        paymentBlock.clickDetailsLink();
 
         wait.until(ExpectedConditions.urlContains("help"));
         String currentUrl = driver.getCurrentUrl();
         assertTrue(currentUrl.contains("help"));
 
         driver.get("https://www.mts.by/");
+        paymentBlock.acceptCookies();
     }
 
     @Test
     void checkFieldsAndContinue(){
-        // Выбираем опцию Услуги связи
-        WebElement serviceSelect = driver.findElement(By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/button"));
-        serviceSelect.click();
-        WebElement communicationOption = driver.findElement(By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/ul/li[1]/p"));
-        communicationOption.click();
-
-        WebElement phoneNumber = driver.findElement(By.xpath("//*[@id=\"connection-phone\"]"));
-        phoneNumber.click();
-        phoneNumber.sendKeys("297777777");
-
-        WebElement sumInput = driver.findElement(By.xpath("//*[@id=\"connection-sum\"]"));
-        sumInput.click();
-        sumInput.sendKeys("100");
-
-        WebElement continueButton = driver.findElement(By.xpath("//*[@id=\"pay-connection\"]/button"));
-        continueButton.click();
-
-
-//        // Намеренно падающий тест для демонстрации неработающей кнопки "Продолжить"
-//        assertNotEquals("https://www.mts.by/", driver.getCurrentUrl());
+        paymentBlock
+                .selectService("Услуги связи")
+                .typePhoneNumber("297777777")
+                .typeSum("100")
+                .clickContinueButton();
     }
 }
